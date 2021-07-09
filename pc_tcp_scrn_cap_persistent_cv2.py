@@ -27,6 +27,7 @@ import numpy as np
 # Use to move files where we have energy capturing issue to a different folder
 from shutil import copyfile
 
+# Folder Path to keep captured images, which encounter issues in extracting the energy reading for future investigation
 issue_file_folder = "C:\\STFX\\Thesis\\RaspBerryPi\\Screen_Capture\\dq_learning\\file_issues\\"
 
 # Path to tesseract.exe on the Windows machine
@@ -36,23 +37,11 @@ pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tessera
 PC_IP = '141.109.106.5'	 # This Application Server IP
 PC_PORT = 54321		  # This Application Server Port
 
-# timestamp_type = "tt"
-
-# def get_time(t_type):
-	
-	# if(t_type == "tt"):
-		# return time.time()
-	
-	# if(t_type == "ut"):
-		# return datetime.datetime.utcnow().timestamp()
-
-
-
 
 method = cv2.TM_SQDIFF_NORMED
 
 
-# Function to get energy information from the captured screen passed though image name
+# Function to get energy information from the captured screen passed though image_name
 # by using the green circle as the reference point
 
 def get_energy_info_green_circle(image_name):
@@ -62,6 +51,7 @@ def get_energy_info_green_circle(image_name):
 	
 	original = image.copy()
 	
+    # Load the green_circle.jpg stored locally as a separate image 
 	green_circle = cv2.imread('green_circle.jpg')
 	
 	result = cv2.matchTemplate(green_circle, image, method)
